@@ -128,4 +128,44 @@ footer a:hover {
   opacity: 1;
 }
 
+@media only screen and (max-width: 600px) {
+  main {
+    width: 85%;
+  }
+  main article {
+    flex-direction: column;
+  }
+  main .story-image {
+    width: 100%;
+  }
+  main .content {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  main {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  main {
+    width: 95%;
+  }
+  main .content {
+    padding-left: 25px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+  main {
+    width: 85%;
+  }
+}
+@media only screen and (min-width: 1366px) {
+  main {
+    width: 60%;
+  }
+}
+
 /*# sourceMappingURL=index.css.map */
