@@ -1,3 +1,73 @@
+// Loader Logic
+const loader = document.querySelector(".loader");
+
+const hideLoading = () => {
+    loader.classList.add("hide");
+}
+
+// DOM Logic
+const main_element = document.querySelector('main');
+
+const createDiv = (className) => {
+    const div = document.createElement('div');
+    div.className = className;
+
+    return div;
+}
+
+const createAncor = (href, target, rel) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = target;
+    a.rel = rel;
+
+    return a;
+}
+
+const createSpan = (text) => {
+    const span = document.createElement('span');
+    span.innerText = text;
+
+    return span;
+}
+
+const renderDom = (story, user) => {
+    const article = document.createElement('article');
+    const div_story = createDiv('story-image');
+    const a_image = createAncor(`${story.url}`, "_blank", "noopener noreferrer");
+    const img = document.createElement('img');
+
+    img.src = 'https://facetofaceart.pl/assets/images/placeholder-600x450.jpg';
+    img.alt = 'placeholder';
+    
+    main_element.appendChild(article);
+    article.appendChild(div_story);
+    div_story.appendChild(a_image);
+    a_image.appendChild(img);
+
+    const div_content = createDiv('content');
+    const a_link = createAncor(`${story.url}`, "_blank", "noopener noreferrer");
+    const head_2 = document.createElement('h2');
+    const head_4 = document.createElement('h4');
+    const paragraph = document.createElement('p');
+    const score = createSpan(`Score: ${story.score}`);
+    const karma = createSpan(`Karma: ${user.value.karma}`);
+    const date = createSpan(`${story.time * 1000}`);
+
+    head_4.innerText = `Author: ${story.by}`;
+    a_link.innerText = `${story.title}`;
+
+    article.appendChild(div_content);
+    div_content.appendChild(head_4)
+    div_content.appendChild(head_2);
+    head_2.appendChild(a_link);
+    div_content.appendChild(paragraph);
+    paragraph.appendChild(score);
+    paragraph.appendChild(karma);
+    paragraph.appendChild(date);
+}
+
+// Api Logic
 const API_URL = "https://hacker-news.firebaseio.com/v0";
 
 const getRandomStories = async (api_url) => {
@@ -37,20 +107,30 @@ const getUser = async (api_url, id) => {
     }
 }
 
+// main function
 (async () => {
-    let data = await getRandomStories(API_URL)
+    try {
+        let data = await getRandomStories(API_URL)
 
-    let allData = await Promise.allSettled(data.map(val => {
-        return getStory(API_URL, val);
-    }))
+        let stories = await Promise.allSettled(data.map(val => {
+            return getStory(API_URL, val);
+        }))
 
-    stories = await allData.map(val => val.value).sort((a, b) => a.score - b.score);
+        stories = await stories.map(val => val.value).sort((a, b) => a.score - b.score);
 
-    let allUser = await Promise.allSettled(stories.map(val => {
-        return getUser(API_URL, val.by);
-    }))
-    console.log(stories, allUser)
-})()
+        let allUser = await Promise.allSettled(stories.map(val => {
+            return getUser(API_URL, val.by);
+        }))
+
+        stories.forEach((story, i) => {
+            renderDom(story, allUser[i]);
+        });
+
+        hideLoading();
+    } catch(e) {
+        console.log(e)
+    }
+})();
 
 // Customize Random function
 const getRandom = (arr, n) => {

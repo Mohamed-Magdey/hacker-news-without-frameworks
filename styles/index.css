@@ -55,11 +55,10 @@ header nav {
   border-top: 6px solid #22313F;
   border-radius: 100%;
   animation: spin 1s infinite linear;
-  display: none;
 }
 
-.display {
-  display: block;
+.hide {
+  display: none;
 }
 
 @keyframes spin {
@@ -73,6 +72,44 @@ header nav {
 main {
   width: 70%;
   margin: 0 auto;
+}
+main article {
+  display: flex;
+  margin: 50px auto 50px;
+}
+main h4 {
+  margin-top: 0;
+}
+main .story-image {
+  width: 30%;
+}
+main .story-image img {
+  width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+}
+main .content {
+  width: 60%;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+main .content a {
+  text-decoration: none;
+  color: #333;
+}
+main .content a:hover {
+  text-decoration: underline;
+}
+main .content p {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+}
+main .content span {
+  color: #757575;
 }
 
 footer {
