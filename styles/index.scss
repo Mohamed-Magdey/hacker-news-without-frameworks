@@ -1,3 +1,6 @@
+// Variables
+$Primary-color:  #22313F;
+
 // General
 html, 
 body {
@@ -40,7 +43,7 @@ body {
 header {
     width: 100%;
     height: 75px;
-    background: #22313F;
+    background: $Primary-color;
     color: #FFF;
 
     nav {
@@ -50,11 +53,44 @@ header {
     }
 }
 
+// Loader
+.loader {
+    font-size: 26px;
+    margin: auto;
+    width: 2em;
+    height: 2em;
+    border: 5px solid #f3f3f3;
+    border-top: 6px solid $Primary-color;
+    border-radius: 100%;
+    animation: spin 1s infinite linear;
+    display: none;
+}
+
+.display {
+    display: block;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Main
+main {
+    width: 70%;
+    margin: 0 auto;
+}
+
 // Footer
 footer {
     text-align: center;
     padding: 20px;
-    background: #22313F;
+    background: $Primary-color;
     color: white;
     line-height: 25px;
 
