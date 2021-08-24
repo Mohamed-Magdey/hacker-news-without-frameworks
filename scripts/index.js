@@ -52,7 +52,7 @@ const renderDom = (story, user) => {
     const paragraph = document.createElement('p');
     const score = createSpan(`Score: ${story.score}`);
     const karma = createSpan(`Karma: ${user.value.karma}`);
-    const date = createSpan(`${story.time * 1000}`);
+    const date = createSpan(`${handleDate(story.time)}`);
 
     head_4.innerText = `Author: ${story.by}`;
     a_link.innerText = `${story.title}`;
@@ -65,6 +65,15 @@ const renderDom = (story, user) => {
     paragraph.appendChild(score);
     paragraph.appendChild(karma);
     paragraph.appendChild(date);
+}
+
+const handleDate = (date) => {
+    let fullDate = new Date(date * 1000);
+    let day = fullDate.getDay();
+    let month = fullDate.getMonth();
+    let year = fullDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
 }
 
 // Api Logic
